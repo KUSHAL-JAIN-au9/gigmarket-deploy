@@ -36,7 +36,7 @@ function AuthWrapper({ type }) {
         } = await axios.post(
           type === "login" ? LOGIN_ROUTE : SIGNUP_ROUTE,
           { email, password },
-          { headers: { "Access-Control-Allow-Origin": "*" } },
+          // { headers: { "Access-Control-Allow-Origin": "*" } },
           { withCredentials: true }
         );
         setCookies("jwt", { jwt: jwt });
