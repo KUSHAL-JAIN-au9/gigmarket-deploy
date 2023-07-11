@@ -24,6 +24,15 @@ app.use(
 
 app.use("/uploads", express.static("uploads"));
 app.use("/uploads/profiles", express.static("uploads/profiles"));
+app.use((req, res, next) => {
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "https://gigmarket-deploy-nextjs-0nvsl.kinsta.app"
+  );
+  // or to allow requests from any domain:
+  // res.setHeader('Access-Control-Allow-Origin', '*');
+  next();
+});
 
 app.use(cookieParser());
 app.use(express.json());
