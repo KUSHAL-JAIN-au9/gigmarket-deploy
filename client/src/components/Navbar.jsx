@@ -88,16 +88,12 @@ function Navbar() {
         try {
           const {
             data: { user },
-          } = await axios.post(
-            GET_USER_INFO,
-            {},
-            {
-              withCredentials: true,
-              headers: {
-                Authorization: `Bearer ${cookies.jwt}`,
-              },
-            }
-          );
+          } = await axios.post(GET_USER_INFO, cookies, {
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${cookies.jwt}`,
+            },
+          });
 
           let projectedUserInfo = { ...user };
           if (user.image) {
