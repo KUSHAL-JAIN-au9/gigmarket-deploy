@@ -9,9 +9,11 @@ import {
 } from "../../utils/constants";
 import { useStateProvider } from "../../context/StateContext";
 import { reducerCases } from "../../context/constants";
+import { useCookies } from "react-cookie";
 
 function Gig() {
   const router = useRouter();
+  const [cookies] = useCookies();
   const { gigId } = router.query;
   const [{ gigData, userInfo }, dispatch] = useStateProvider();
   useEffect(() => {
@@ -22,7 +24,7 @@ function Gig() {
       try {
         const {
           data: { gig },
-        } = await axios.get(`${GET_GIG_DATA}/${gigId}`);
+        } = await axios.get(`${GET_GIG_DATA}/${gigId}`, cookies);
         dispatch({ type: reducerCases.SET_GIG_DATA, gigData: gig });
       } catch (err) {
         console.log(err);
@@ -35,7 +37,7 @@ function Gig() {
     const checkGigOrdered = async () => {
       const {
         data: { hasUserOrderedGig },
-      } = await axios.get(`${CHECK_USER_ORDERED_GIG_ROUTE}/${gigId}`, {
+      } = await axios.get(`${CHECK_USER_ORDERED_GIG_ROUTE}/${gigId}`, cookies, {
         withCredentials: true,
       });
       dispatch({

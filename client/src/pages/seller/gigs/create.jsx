@@ -68,14 +68,18 @@ function CreateGigs() {
         time,
         shortDesc,
       };
-      const response = await axios.post(ADD_GIG_ROUTE, formData, {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${cookies.jwt}`,
-        },
-        params: gigData,
-      });
+      const response = await axios.post(
+        ADD_GIG_ROUTE,
+        { jwt: cookies.jwt, ...formData },
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${cookies.jwt}`,
+          },
+          params: gigData,
+        }
+      );
       if (response.status === 201) {
         ToastSucess("Gig added sucessfully !");
         router.push("/seller/gigs");

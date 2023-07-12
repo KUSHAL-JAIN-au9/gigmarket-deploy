@@ -4,14 +4,16 @@ import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 
 function Index() {
+  const [cookies] = useCookies();
   const [{ userInfo }] = useStateProvider();
   const router = useRouter();
   const [dashboardData, setDashboardData] = useState(undefined);
   useEffect(() => {
     const getBuyerDashboardData = async () => {
-      const response = await axios.get(GET_SELLER_DASHBOARD_DATA, {
+      const response = await axios.get(GET_SELLER_DASHBOARD_DATA, cookies, {
         withCredentials: true,
       });
       if (response.status === 200) {

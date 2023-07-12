@@ -2,8 +2,10 @@ import { ORDER_SUCCESS_ROUTE } from "../utils/constants";
 import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
+import { useCookies } from "react-cookie";
 
 function Success() {
+  const [cookies] = useCookies();
   const router = useRouter();
   const { payment_intent } = router.query;
 
@@ -12,7 +14,7 @@ function Success() {
       try {
         await axios.put(
           ORDER_SUCCESS_ROUTE,
-          { paymentIntent: payment_intent },
+          { paymentIntent: payment_intent, ...cookies },
           { withCredentials: true }
         );
       } catch (err) {

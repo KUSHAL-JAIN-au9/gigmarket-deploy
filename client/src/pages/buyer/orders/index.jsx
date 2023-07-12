@@ -4,8 +4,10 @@ import axios from "axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import NoRecords from "../../../components/NoRecords";
+import { useCookies } from "react-cookie";
 
 function Orders() {
+  const [cookies] = useCookies();
   const [orders, setOrders] = useState([]);
   const [{ userInfo }] = useStateProvider();
   useEffect(() => {
@@ -13,7 +15,9 @@ function Orders() {
       try {
         const {
           data: { orders },
-        } = await axios.get(GET_BUYER_ORDERS_ROUTE, { withCredentials: true });
+        } = await axios.get(GET_BUYER_ORDERS_ROUTE, cookies, {
+          withCredentials: true,
+        });
         setOrders(orders);
       } catch (err) {
         console.error(err);

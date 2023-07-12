@@ -10,9 +10,11 @@ import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 
 function Profile() {
   const router = useRouter();
+  const [cookies] = useCookies();
   const [{ userInfo }, dispatch] = useStateProvider();
   const [isLoaded, setIsLoaded] = useState(false);
   const [imageHover, setImageHover] = useState(false);
@@ -22,6 +24,7 @@ function Profile() {
     userName: "",
     fullName: "",
     description: "",
+    jwt: cookies.jwt,
   });
 
   useEffect(() => {
@@ -82,12 +85,16 @@ function Profile() {
           formData.append("images", image);
           const {
             data: { img },
-          } = await axios.post(SET_USER_IMAGE, formData, {
-            withCredentials: true,
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          });
+          } = await axios.post(
+            SET_USER_IMAGE,
+            { jwt: cookies.jwt, ...formData },
+            {
+              withCredentials: true,
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
           imageName = img;
         }
 

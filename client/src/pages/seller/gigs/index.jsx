@@ -3,15 +3,17 @@ import axios from "axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import NoRecords from "../../../components/NoRecords";
+import { useCookies } from "react-cookie";
 
 function Index() {
+  const [cookies] = useCookies();
   const [gigs, setGigs] = useState([]);
   useEffect(() => {
     const getUserGigs = async () => {
       try {
         const {
           data: { gigs: gigsData },
-        } = await axios.get(GET_USER_GIGS_ROUTE, {
+        } = await axios.get(GET_USER_GIGS_ROUTE, cookies, {
           withCredentials: true,
         });
         setGigs(gigsData);

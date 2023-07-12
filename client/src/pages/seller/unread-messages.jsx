@@ -4,15 +4,19 @@ import { GET_UNREAD_MESSAGES, MARK_AS_READ_ROUTE } from "../../utils/constants";
 import axios from "axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 
 function UnreadMessages() {
+  const [cookies] = useCookies();
   const [{ userInfo }] = useStateProvider();
   const [messages, setMessages] = useState([]);
   useEffect(() => {
     const getUnreadMessages = async () => {
       const {
         data: { messages: unreadMessages },
-      } = await axios.get(GET_UNREAD_MESSAGES, { withCredentials: true });
+      } = await axios.get(GET_UNREAD_MESSAGES, cookies, {
+        withCredentials: true,
+      });
       setMessages(unreadMessages);
     };
     if (userInfo) {
@@ -21,11 +25,9 @@ function UnreadMessages() {
   }, [userInfo]);
 
   const markAsRead = async (id) => {
-    const response = await axios.put(
-      `${MARK_AS_READ_ROUTE}/${id}`,
-      {},
-      { withCredentials: true }
-    );
+    const response = await axios.put(`${MARK_AS_READ_ROUTE}/${id}`, cookies, {
+      withCredentials: true,
+    });
     if (response.status === 200) {
       const clonedMessages = [...messages];
       const index = clonedMessages.findIndex((message) => message.id === id);

@@ -5,8 +5,10 @@ import axios from "axios";
 import { ADD_MESSAGE, GET_MESSAGES } from "../../utils/constants";
 import { useRouter } from "next/router";
 import { useStateProvider } from "../../context/StateContext";
+import { useCookies } from "react-cookie";
 function MessageContainer() {
   const router = useRouter();
+  const [cookies] = useCookies();
   const { orderId } = router.query;
   const [{ userInfo }] = useStateProvider();
   const [recipentId, setRecipentId] = useState(undefined);
@@ -14,7 +16,7 @@ function MessageContainer() {
     const getMessages = async () => {
       const {
         data: { messages: dataMessages, recipentId: recipent },
-      } = await axios.get(`${GET_MESSAGES}/${orderId}`, {
+      } = await axios.get(`${GET_MESSAGES}/${orderId}`, cookies, {
         withCredentials: true,
       });
       setMessages(dataMessages);
@@ -43,7 +45,7 @@ function MessageContainer() {
     if (messageText.length) {
       const response = await axios.post(
         `${ADD_MESSAGE}/${orderId}`,
-        { message: messageText, recipentId },
+        { message: messageText, recipentId, ...cookies },
         { withCredentials: true }
       );
       if (response.status === 201) {

@@ -49,7 +49,7 @@ function EditGig() {
       try {
         const {
           data: { gig },
-        } = await axios.get(`${GET_GIG_DATA}/${gigId}`);
+        } = await axios.get(`${GET_GIG_DATA}/${gigId}`, cookies);
 
         setData({ ...gig, time: gig.revisions });
         setfeatures(gig.features);
@@ -100,7 +100,7 @@ function EditGig() {
       };
       const response = await axios.put(
         `${EDIT_GIG_DATA}/${data.id}`,
-        formData,
+        { jwt: cookies.jwt, ...formData },
         {
           withCredentials: true,
           headers: {

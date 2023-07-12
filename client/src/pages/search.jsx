@@ -3,7 +3,9 @@ import { SEARCH_GIGS_ROUTE } from "../utils/constants";
 import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 function Search() {
+  const [cookies] = useCookies();
   const router = useRouter();
   const { category, q } = router.query;
   const [gigs, setGigs] = useState(undefined);
@@ -13,7 +15,8 @@ function Search() {
         const {
           data: { gigs },
         } = await axios.get(
-          `${SEARCH_GIGS_ROUTE}?searchTerm=${q}&category=${category}`
+          `${SEARCH_GIGS_ROUTE}?searchTerm=${q}&category=${category}`,
+          cookies
         );
         setGigs(gigs);
       } catch (err) {
