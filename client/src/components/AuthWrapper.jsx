@@ -36,9 +36,10 @@ function AuthWrapper({ type }) {
         } = await axios.post(
           type === "login" ? LOGIN_ROUTE : SIGNUP_ROUTE,
           { email, password },
-          // { headers: { "Access-Control-Allow-Origin": "*" } },
           { withCredentials: true }
         );
+        console.log("jwt =======>", jwt);
+        console.log("user ======>", user);
         setCookies("jwt", { jwt: jwt });
         ToastSucess("Logged in sucessfully");
         dispatch({ type: reducerCases.CLOSE_AUTH_MODAL });

@@ -87,6 +87,9 @@ export const getUserInfo = async (req, res, next) => {
           id: req.userId,
         },
       });
+
+      console.log("req--------",req);
+      console.log("res--------",res);
       return res.status(200).json({
         user: {
           id: user?.id,
