@@ -16,7 +16,7 @@ console.log(process.env.ORIGIN);
 
 app.use(
   cors({
-    origin: [process.env.ORIGIN],
+    origin: [process.env.ORIGIN,"http://localhost:3000",],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     credentials: true,
   })
