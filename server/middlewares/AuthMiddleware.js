@@ -7,7 +7,7 @@ export const verifyToken = (req, res, next) => {
 
   const storedToken = store("jwt");
   // console.log("store  ===>", store("jwt"));
-  console.log(n.jwt);
+  // console.log(n.jwt);
   if (!storedToken) return res.status(401).send("You are not authenticated!");
   jwt.verify(storedToken, process.env.JWT_KEY, async (err, payload) => {
     if (err) return res.status(403).send("Token is not valid!");

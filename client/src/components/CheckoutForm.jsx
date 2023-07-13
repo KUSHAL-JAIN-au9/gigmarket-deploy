@@ -21,7 +21,7 @@ export default function CheckoutForm() {
     }
 
     const clientSecret = new URLSearchParams(window.location.search).get(
-      "sk_test_51IBHeVKMmxmX5hiTtepbd5Pn5GJtcE9jD5wr9VkgegXjLxgyBcInYb2YFbIlICrbjvyI2crfroWIlZslY5La6VXu006TZARC2U"
+      process.env.STRIPE_SECRET
     );
 
     if (!clientSecret) {
