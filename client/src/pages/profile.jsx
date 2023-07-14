@@ -85,16 +85,12 @@ function Profile() {
           formData.append("images", image);
           const {
             data: { img },
-          } = await axios.post(
-            SET_USER_IMAGE,
-            { jwt: cookies.jwt, ...formData },
-            {
-              withCredentials: true,
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-            }
-          );
+          } = await axios.post(SET_USER_IMAGE, formData, {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          });
           imageName = img;
         }
 
@@ -118,6 +114,8 @@ function Profile() {
     "block p-4 w-full text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50  focus:ring-blue-500 focus:border-blue-500";
   const labelClassName =
     "mb-2 text-lg font-medium text-gray-900  dark:text-white";
+
+  console.log("cookies", cookies);
   return (
     <>
       {isLoaded && (

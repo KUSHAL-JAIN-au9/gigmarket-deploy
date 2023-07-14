@@ -4,10 +4,8 @@ import axios from "axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import NoRecords from "../../../components/NoRecords";
-import { useCookies } from "react-cookie";
 
 function Orders() {
-  const [cookies] = useCookies();
   const [orders, setOrders] = useState([]);
   const [{ userInfo }] = useStateProvider();
   useEffect(() => {
@@ -15,9 +13,7 @@ function Orders() {
       try {
         const {
           data: { orders },
-        } = await axios.get(GET_BUYER_ORDERS_ROUTE, cookies, {
-          withCredentials: true,
-        });
+        } = await axios.get(GET_BUYER_ORDERS_ROUTE, { withCredentials: true });
         setOrders(orders);
       } catch (err) {
         console.error(err);
@@ -28,7 +24,7 @@ function Orders() {
   return (
     <div className="min-h-[80vh] my-10 mt-0 px-32">
       <h3 className="m-5 text-2xl font-semibold">All your Orders</h3>
-      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <div className="relative overflow-x-auto shadow-2xl  sm:rounded-lg">
         {orders.length == 0 ? (
           <NoRecords title="orders" />
         ) : (
@@ -73,7 +69,7 @@ function Orders() {
                     </th>
                     <td className="px-6 py-4">{order.gig.category}</td>
                     <td className="px-6 py-4">{order.price}</td>
-                    <td className="px-6 py-4">{order.gig.deliveryTime}</td>
+                    <td className="px-6 py-4">{order.gig.deliveryTime} days</td>
                     <td className="px-6 py-4">
                       {order.createdAt.split("T")[0]}
                     </td>

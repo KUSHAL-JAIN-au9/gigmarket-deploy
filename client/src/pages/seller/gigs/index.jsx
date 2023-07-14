@@ -3,17 +3,15 @@ import axios from "axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import NoRecords from "../../../components/NoRecords";
-import { useCookies } from "react-cookie";
 
 function Index() {
-  const [cookies] = useCookies();
   const [gigs, setGigs] = useState([]);
   useEffect(() => {
     const getUserGigs = async () => {
       try {
         const {
           data: { gigs: gigsData },
-        } = await axios.get(GET_USER_GIGS_ROUTE, cookies, {
+        } = await axios.get(GET_USER_GIGS_ROUTE, {
           withCredentials: true,
         });
         setGigs(gigsData);
@@ -67,8 +65,8 @@ function Index() {
                       {title}
                     </th>
                     <td className="px-6 py-4">{category}</td>
-                    <td className="px-6 py-4">{price}</td>
-                    <td className="px-6 py-4">{deliveryTime}</td>
+                    <td className="px-6 py-4">{price}$</td>
+                    <td className="px-6 py-4">{deliveryTime} days</td>
                     <td className="px-6 py-4 text-right">
                       <Link
                         href={`/seller/gigs/${id}`}

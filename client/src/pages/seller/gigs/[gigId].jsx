@@ -49,9 +49,9 @@ function EditGig() {
       try {
         const {
           data: { gig },
-        } = await axios.get(`${GET_GIG_DATA}/${gigId}`, cookies);
+        } = await axios.get(`${GET_GIG_DATA}/${gigId}`);
 
-        setData({ ...gig, time: gig.revisions });
+        setData({ ...gig, time: gig.deliveryTime });
         setfeatures(gig.features);
 
         gig.images.forEach((image) => {
@@ -100,7 +100,7 @@ function EditGig() {
       };
       const response = await axios.put(
         `${EDIT_GIG_DATA}/${data.id}`,
-        { jwt: cookies.jwt, ...formData },
+        formData,
         {
           withCredentials: true,
           headers: {

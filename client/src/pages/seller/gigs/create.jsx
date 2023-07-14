@@ -12,8 +12,7 @@ function CreateGigs() {
   const router = useRouter();
   const inputClassName =
     "block p-4 w-full text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50  focus:ring-blue-500 focus:border-blue-500";
-  const labelClassName =
-    "mb-2 text-lg font-medium text-gray-900  dark:text-white";
+  const labelClassName = "mb-2 text-lg font-medium text-gray-900  text-black";
   const [files, setFile] = useState([]);
   const [features, setfeatures] = useState([]);
   const [data, setData] = useState({
@@ -68,18 +67,14 @@ function CreateGigs() {
         time,
         shortDesc,
       };
-      const response = await axios.post(
-        ADD_GIG_ROUTE,
-        { jwt: cookies.jwt, ...formData },
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${cookies.jwt}`,
-          },
-          params: gigData,
-        }
-      );
+      const response = await axios.post(ADD_GIG_ROUTE, formData, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${cookies.jwt}`,
+        },
+        params: gigData,
+      });
       if (response.status === 201) {
         ToastSucess("Gig added sucessfully !");
         router.push("/seller/gigs");
@@ -143,7 +138,9 @@ function CreateGigs() {
         </div>
         <div className="grid grid-cols-2 gap-11">
           <div>
-            <label htmlFor="delivery">Delivery Time</label>
+            <label htmlFor="delivery" className={labelClassName}>
+              Delivery Time
+            </label>
             <input
               type="number"
               className={inputClassName}
@@ -151,7 +148,7 @@ function CreateGigs() {
               name="time"
               value={data.time}
               onChange={handleChange}
-              placeholder="Minimum Delivery Time"
+              placeholder="Minimum Delivery Time in days"
             />
           </div>
           <div>
@@ -243,7 +240,7 @@ function CreateGigs() {
               type="number"
               className={`${inputClassName} w-1/5`}
               id="price"
-              placeholder="Enter a price"
+              placeholder="Enter a price in $"
               name="price"
               value={data.price}
               onChange={handleChange}
