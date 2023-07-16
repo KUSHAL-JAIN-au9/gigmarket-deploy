@@ -1,39 +1,9 @@
 import Link from "next/link";
 import React from "react";
-import {
-  FiGithub,
-  FiInstagram,
-  FiYoutube,
-  FiLinkedin,
-  FiTwitter,
-} from "react-icons/fi";
-import FiverrLogo from "./GigmarketLogo";
 import { categories } from "../utils/categories";
+import GigmarketLogo from "./GigmarketLogo";
 
 function Footer() {
-  const socialLinks = [
-    { name: "Github", icon: <FiGithub />, link: "https://www.github.com" },
-    {
-      name: "Youtube",
-      icon: <FiYoutube />,
-      link: "https://www.youtube.com/KishanSheth21/",
-    },
-    {
-      name: "LinkedIn",
-      icon: <FiLinkedin />,
-      link: "https://www.linkedin.com/in/koolkishan/",
-    },
-    {
-      name: "Instagram",
-      icon: <FiInstagram />,
-      link: "https://instagram.com/koolkishansheth",
-    },
-    {
-      name: "Twitter",
-      icon: <FiTwitter />,
-      link: "https://twitter.com/koolkishansheth",
-    },
-  ];
   const data = [
     {
       headerName: "Categories",
@@ -116,17 +86,7 @@ function Footer() {
         })}
       </ul>
       <div className="mt-12 flex items-center justify-between">
-        <FiverrLogo fillColor={"#404145"} />
-        <ul className="flex gap-5">
-          {socialLinks.map(({ icon, link, name }) => (
-            <li
-              key={name}
-              className="text-xl text-[#404145] hover:text-[#1DBF73] transition-all"
-            >
-              <Link href={link}>{icon}</Link>
-            </li>
-          ))}
-        </ul>
+        <GigmarketLogo fillColor={"#404145"} />
       </div>
     </footer>
   );
